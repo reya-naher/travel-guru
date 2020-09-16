@@ -9,16 +9,19 @@ import {
 } from "react-router-dom";
 import Booking from './Components/Booking/Booking';
 
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import data from '../src/FakeData/FakePlace';
-// export const PlaceContext = createContext()
+import BookingDetail from './Components/BookingDetail/BookingDetail';
+import Login from './Components/Login/Login'
+
+export const UserContext = createContext()
 
 function App() {
   const [loggedInUser,setLoggedInUser] = useState({})
   return (
-    // <PlaceContext.provider value={[loggedInUser,setLoggedInUser]}>
-    //   <Header></Header>
-    //   <Home></Home>
-    // </PlaceContext.provider>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+            <p>Name: {loggedInUser.name}</p>
+      <p>Email: {loggedInUser.email}</p>
     <Router>
         <Header></Header>
       <Switch>
@@ -27,11 +30,16 @@ function App() {
         </Route>
         <Route path="/place/:name">
         <Booking data={data}></Booking>
-        </Route>
+          </Route>
+          <Route path="/login">
+              <Login></Login>
+            </Route>
+          <PrivateRoute path="/book/:id">
+              <BookingDetail></BookingDetail>
+            </PrivateRoute>
       </Switch>
-    
-
-        </Router>  
+      </Router>  
+      </UserContext.Provider>
 
   );
 }
