@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { createContext, useState } from 'react';
 import './App.css';
+import Header from './Components/Header/Header';
+import Home from './Components/Home/Home';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Booking from './Components/Booking/Booking';
+
+import data from '../src/FakeData/FakePlace';
+// export const PlaceContext = createContext()
 
 function App() {
+  const [loggedInUser,setLoggedInUser] = useState({})
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <PlaceContext.provider value={[loggedInUser,setLoggedInUser]}>
+    //   <Header></Header>
+    //   <Home></Home>
+    // </PlaceContext.provider>
+    <Router>
+        <Header></Header>
+      <Switch>
+        <Route exact path="/">
+        <Home data={data}></Home> 
+        </Route>
+        <Route path="/place/:name">
+        <Booking data={data}></Booking>
+        </Route>
+      </Switch>
+    
+
+        </Router>  
+
   );
 }
 
