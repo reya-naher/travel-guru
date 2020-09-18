@@ -3,7 +3,7 @@ import './Login.css';
 import { useContext } from 'react';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
-import { current, initializeLoginFramework, handleGoogleSignIn, handleSignOut, handleFbSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../Login/LoginManager';
+import { resetPassword, current, initializeLoginFramework, handleGoogleSignIn, handleSignOut, handleFbSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../Login/LoginManager';
 import Header from '../Header/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
@@ -69,6 +69,12 @@ function Login() {
       const passwordHasNumber = /\d{1}/.test(e.target.value);
       isFieldValid = isPasswordValid && passwordHasNumber;
     }
+    if (e.target.name === 'confirm') {
+      const isPasswordValid = e.target.value.length > 6;
+      const passwordHasNumber = /\d{1}/.test(e.target.value);
+      isFieldValid = isPasswordValid && passwordHasNumber;
+    }
+
     if (isFieldValid) {
       const newUserInfo = { ...user };
       newUserInfo[e.target.name] = e.target.value;
@@ -92,48 +98,51 @@ function Login() {
     e.preventDefault();
   }
 
+
   return (
     <>
       <Header></Header>
       <div style={{ textAlign: 'center' }}>
         <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id="" />
         <label className="checkbox-style" htmlFor="newUser">Don't Have An Account? Click Here...</label>
-        <br></br>  
-
-        {newUser ? <form onSubmit={handleSubmit} class="form-design">
-          <label className="form-headline">{newUser ? "Create an account" : "Login"}</label>
-          <br />
-          <input placeholder="FirstName" className="input-text" name="firstname" id="fname" type="text" onBlur={handleBlur} />
-          <br />
-          <input placeholder="SecondName"  className="input-text" name="secondname" id="fname" type="text" onBlur={handleBlur} />
-          <br />
-          <input className="input-text" type="text" name="email" onBlur={handleBlur} placeholder="Email address" required />
-          <br />
-          <input className="input-text" type="password" name="password" onBlur={handleBlur} placeholder="Password" required />
-          <br />
-          <input className="input-text" type="password" name="password" onBlur={handleBlur} placeholder="Confirm Password" required />
-          <br />
-          <button className="submit-btn" type="submit">{newUser ? 'Sign up' : 'Sign in'}</button>
-         
-        </form> :
+        <br></br>
+        {/* show form */}
+        {newUser ?
           <form onSubmit={handleSubmit} class="form-design">
+            <label className="form-headline">{newUser ? "Create an account" : "Login"}</label>
+            <br />
+            <input placeholder="FirstName" className="input-text" name="firstName" id="fname" type="text" onBlur={handleBlur} />
+            <br />
+            <input placeholder="SecondName" className="input-text" name="secondName" id="fname" type="text" onBlur={handleBlur} />
+            <br />
+            <input className="input-text" type="text" name="email" onBlur={handleBlur} placeholder="Email address" required />
+            <br />
+            <input className="input-text" type="password" name="password" onBlur={handleBlur} placeholder="Password" required />
+            <br />
+            <input className="input-text" type="password" name="confirm" onBlur={handleBlur} placeholder="Confirm Password" required />
+            <br />
+            <button className="submit-btn" type="submit">{newUser ? 'Sign up' : 'Sign in'}
+            </button>
+            <p style={{ color: 'red' }}>{user.error}</p>
+            {user.success && <p style={{ color: 'green' }}>User {newUser ? 'created' : 'Logged In'} successfully</p>}
+          </form> :<form onSubmit={handleSubmit} className="form-design">
             <label className="form-headline">{newUser ? "Create an account" : "Login"}</label>
             <br />
             <input className="input-text" type="text" name="email" onBlur={handleBlur} placeholder="Email address" required />
             <br />
             <input className="input-text" type="password" name="password" onBlur={handleBlur} placeholder="Password" required />
             <br />
+            <button className="forget-btn" onClick={() => resetPassword(user.email)}>Forget Password</button>
             <button className="submit-btn" type="submit">{newUser ? 'Sign up' : 'Sign in'}</button>
+            <p style={{ color: 'red' }}>{user.error}</p>
+            {user.success && <p style={{ color: 'green' }}>User {newUser ? 'created' : 'Logged In'} successfully</p>}
           </form>
+
         }
-
-<p style={{ color: 'red' }}>{user.error}</p>
-        {user.success && <p style={{ color: 'green' }}>User {newUser ? 'created' : 'Logged In'} successfully</p>}
-
         <h5 className="horizontal-text"><span>OR</span></h5>
         <button className="another-sign-btn" onClick={googleSignIn}>
-        <FontAwesomeIcon className="brand-icon" icon={faGoogle} />Continue With Google</button>
-        
+          <FontAwesomeIcon className="brand-icon" icon={faGoogle} />Continue With Google</button>
+
         <br />
         <button className="another-sign-btn" onClick={fbSignIn}><FontAwesomeIcon className="brand-icon" icon={faFacebook} />Continue With Facebook</button>
         {
@@ -149,7 +158,4 @@ function Login() {
 }
 
 export default Login;
-
-
-
 

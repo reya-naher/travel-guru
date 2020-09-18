@@ -7,29 +7,27 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { Button } from '@material-ui/core';
 import logo from '../../images/Logo.png';
 import { useContext } from 'react';
 import { UserContext } from '../../App';
 
-
 const useStyles = makeStyles((theme) => ({
   btn: {
     backgroundColor: "#FFBD33",
-    marginRight: "10px",
+    marginRight: "5px",
     borderRadius: "10px",
-    padding:"5px 10px"
+    padding: "5px 10px"
   },
   iconBtnImg: {
     marginRight: theme.spacing(10),
-   
+
   },
   grow: {
     flexGrow: 1,
   },
   iconBtn: {
     marginRight: theme.spacing(10),
-    color:"rgb(168, 167, 162)"
+    color: "#FFBD33"
   },
   search: {
     position: 'relative',
@@ -54,9 +52,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: "#FFBD33"
   },
   inputRoot: {
-    color: 'inherit',
+    color: 'black',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -72,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const [loggedInUser, setLoggedInUser] = useContext(UserContext)
+  const signOut = () => {
+    setLoggedInUser({});
+  }
 
   return (
     <div className={classes.grow}>
@@ -105,8 +107,10 @@ const Header = () => {
           <Typography variant="h6" color="inherit" className={classes.iconBtn}>
             Contact
     </Typography>
-          <button  className={classes.btn}>Login</button>
-          <button  className={classes.btn} onClick={() => setLoggedInUser({})}>Sign Out</button>
+          {/* <button className={classes.btn}
+            onClick={() => setLoggedInUser({})}>Sign Out</button> */}
+          <button className={classes.btn}
+            onClick={() => signOut()}>Sign Out</button>
           <div className={classes.grow} />
         </Toolbar>
       </AppBar>

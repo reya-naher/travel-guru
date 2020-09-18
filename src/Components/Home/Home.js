@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Home.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
-import { Divider, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
   btn: {
     backgroundColor: "#FFBD33",
-margin:"20px"
+    margin: "20px"
   },
   root: {
     float: "left",
     margin: "10px",
-
   },
   text: {
     width: "250px",
-    color:"white"
+    color: "white"
   },
   imageSet: {
     height: 260,
@@ -44,37 +42,34 @@ const Home = (props) => {
     <div className="cover">
       <div className="opacity-set">
         <Header></Header>
-        <Grid   container
-  direction="row"
-  justify="space-evenly"
-  alignItems="center">
+        <Grid container
+          direction="row"
+          justify="space-evenly"
+          alignItems="center">
           <Grid className={classes.text}>
+            {/* show description */}
             <h1>{place.name}</h1>
             <Typography variant="h6" component="p">{place.subtitle}</Typography>
-            
-          <div>
-              
+            <div>
               <Button variant="contained" className={classes.btn}>
-              <Link to={"/place/"+place.name}>
+                <Link to={"/place/" + place.name}>
                   Booking
                   </Link>
-          </Button>
-            
-          </div>
-     </Grid>
+              </Button>
+            </div>
+          </Grid>
           <Grid>
-          {
-            fakeData.map(data =>
-              <>
-                <div className="card-item">
-                    <img className={classes.imageSet} onClick={() => handlePlace(data.id)}  src={data.img} alt="" />
-                  
-                </div>
-              </>
-            )
+            {
+              fakeData.map(data =>
+                <>
+                  {/* show card img */}
+                  <div className="card-item">
+                    <img className={classes.imageSet} onClick={() => handlePlace(data.id)} src={data.img} alt="" />
+                  </div>
+                </>
+              )
             }
-            </Grid>
-
+          </Grid>
         </Grid>
       </div>
     </div>

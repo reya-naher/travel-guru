@@ -55,3 +55,12 @@ button{
   margin-right: 15px;
   
 }
+.forget-btn{
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  color:#FFBD33;
+}

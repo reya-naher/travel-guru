@@ -10,7 +10,7 @@ import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Header from '../Header/Header';
-import GoogleMap from './GoogleMap';
+import Map from './Map';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,11 +35,13 @@ const BookingDetail = (props) => {
   const filterData = hotels.filter(item => item.id === id)
   console.log(filterData)
   return (
-    
+
     <Grid container>
       <Header></Header>
       <Grid item xs={6}>
+        <p>stays in 13-14April 3 guests</p>
         <h1>Stays In {name}</h1>
+        {/* show hotel */}
         {
           filterData.map((data, index) =>
             <Grid item xs={12} key={index}>
@@ -94,7 +96,8 @@ const BookingDetail = (props) => {
         }
       </Grid>
       <Grid item xs={6}>
-        <GoogleMap></GoogleMap>
+        {/* show map */}
+        <Map></Map>
       </Grid>
     </Grid>
   );
