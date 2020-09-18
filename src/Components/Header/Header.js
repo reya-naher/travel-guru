@@ -1,4 +1,5 @@
 import React from 'react';
+import './Header.css';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,14 +8,28 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { Button } from '@material-ui/core';
-import logo from '../../images/Logo.png'
+import logo from '../../images/Logo.png';
+import { useContext } from 'react';
+import { UserContext } from '../../App';
+
 
 const useStyles = makeStyles((theme) => ({
+  btn: {
+    backgroundColor: "#FFBD33",
+    marginRight: "10px",
+    borderRadius: "10px",
+    padding:"5px 10px"
+  },
+  iconBtnImg: {
+    marginRight: theme.spacing(10),
+   
+  },
   grow: {
     flexGrow: 1,
   },
   iconBtn: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(10),
+    color:"rgb(168, 167, 162)"
   },
   search: {
     position: 'relative',
@@ -45,25 +60,25 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: '20ch',
     },
-  },
+  }
 }));
 
 const Header = () => {
   const classes = useStyles();
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext)
 
   return (
-<div className={classes.grow}>
+    <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-        <IconButton edge="start" color="inherit" className={classes.iconBtn}  >
-            <img src={logo} height="50" width="150" alt=""/>
+          <IconButton edge="start" color="inherit" className={classes.iconBtnImg}  >
+            <img src={logo} height="50" width="150" alt="" />
           </IconButton>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -81,16 +96,17 @@ const Header = () => {
           <Typography variant="h6" color="inherit" className={classes.iconBtn}>
             News
     </Typography>
-    <Typography variant="h6" color="inherit" className={classes.iconBtn}>
+          <Typography variant="h6" color="inherit" className={classes.iconBtn}>
             Destination
     </Typography>
-    <Typography variant="h6" color="inherit" className={classes.iconBtn}>
+          <Typography variant="h6" color="inherit" className={classes.iconBtn}>
             Blog
     </Typography>
-    <Typography variant="h6" color="inherit" className={classes.iconBtn}>
+          <Typography variant="h6" color="inherit" className={classes.iconBtn}>
             Contact
-    </Typography>     
-    <Button color="secondary">Login</Button>
+    </Typography>
+          <button  className={classes.btn}>Login</button>
+          <button  className={classes.btn} onClick={() => setLoggedInUser({})}>Sign Out</button>
           <div className={classes.grow} />
         </Toolbar>
       </AppBar>

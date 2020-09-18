@@ -1,63 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css'
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import { Link } from 'react-router-dom';
+import Header from '../Header/Header';
+import { Divider, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
+  btn: {
+    backgroundColor: "#FFBD33",
+margin:"20px"
+  },
   root: {
-    maxWidth: 345,
     float: "left",
-    margin: "10px"
+    margin: "10px",
+
   },
-  media: {
-    height: 140,
+  text: {
+    width: "250px",
+    color:"white"
   },
+  imageSet: {
+    height: 260,
+    width: 220,
+    borderRadius: "25px"
+  }
 });
 
-
-
-const Home = (params) => {
+const Home = (props) => {
   const classes = useStyles();
+  const fakeData = props.data;
 
-  const fakeData = params.data
+  const [place, setPlace] = useState(fakeData[0])
+
+  const handlePlace = (id) => {
+    const showPlace = fakeData.find(item => item.id === id)
+    setPlace(showPlace)
+  }
   return (
-  <div className="container">
-    {
-      fakeData.map(data =>
-        <Card key={data.id} className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={data.img}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {data.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-           {data.subtitle}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-            <Link to={"/place/"+data.name}>
-            <Button size="small" color="primary">
-            Booking
+
+    <div className="cover">
+      <div className="opacity-set">
+        <Header></Header>
+        <Grid   container
+  direction="row"
+  justify="space-evenly"
+  alignItems="center">
+          <Grid className={classes.text}>
+            <h1>{place.name}</h1>
+            <Typography variant="h6" component="p">{place.subtitle}</Typography>
+            
+          <div>
+              
+              <Button variant="contained" className={classes.btn}>
+              <Link to={"/place/"+place.name}>
+                  Booking
+                  </Link>
           </Button>
-            </Link>
-        </CardActions>
-      </Card>)
-    }
-</div>
+            
+          </div>
+     </Grid>
+          <Grid>
+          {
+            fakeData.map(data =>
+              <>
+                <div className="card-item">
+                    <img className={classes.imageSet} onClick={() => handlePlace(data.id)}  src={data.img} alt="" />
+                  
+                </div>
+              </>
+            )
+            }
+            </Grid>
+
+        </Grid>
+      </div>
+    </div>
+
   );
 };
 

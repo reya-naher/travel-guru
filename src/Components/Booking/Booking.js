@@ -1,24 +1,46 @@
-import 'date-fns';
-import React from 'react';
+import React,{useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import { Grid, Paper, Typography,  InputLabel } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { useHistory } from 'react-router-dom';
+import Header from '../Header/Header';
+import './Booking.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  text: {
+    color: "white"
+  },
+  header: {
+    marginLeft: "180px",
+    fontSize: "80px",
+    fontWeight:"bold"
+  },
+  paragraph: {
+    marginLeft: "80px"
+  },
   paper: {
     padding: theme.spacing(4),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    margin:"20px"
+    margin: "20px"
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
   },
 }));
 
@@ -26,75 +48,82 @@ const Booking = (params) => {
   const classes = useStyles();
   const { name } = useParams()
   const findData = params.data.find(item => item.name === name)
-  console.log(findData)
+  console.log(findData);
 
   const history = useHistory()
-    const handleBook = (id) => {
-        history.push(`/book/${id}`);
-    }
+  const handleBook = (id) => {
+    history.push(`/book/${name}/${id}`);
+  }
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-09-17T21:11:54'));
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
 
   return (
+    <>
+       <div className="cover">
+      <div className="opacity-set">
+      <Header></Header>
     <div className={classes.root}>
-<Grid
-  container
-  direction="row"
-  justify="space-evenly"
-  alignItems="center"
+      <Grid
+        container
+        direction="row"
+          justify="space-evenly"  
+        alignItems="center"
       >
-          <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-          <Typography gutterBottom variant="h5" component="h2">
+        <Grid item xs={12} sm={6} className={classes.text}>
+            <Typography className={classes.header} gutterBottom variant="h4" component="p">
               {findData.name}
             </Typography>
-            <Typography gutterBottom variant="h5" component="p">
+            <Typography className={classes.paragraph} gutterBottom variant="h6" component="p">
               {findData.description}
             </Typography>
-          </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <TextField id="outlined-basic" label="Origin" variant="outlined" />
-            <br />
-            <TextField id="outlined-basic" label="Destination" variant="outlined" />
-            <br />
-
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
-        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="From"
-          format="MM/dd/yy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-                />
-                        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="To"
-          format="MM/dd/yy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-      </Grid>
-            </MuiPickersUtilsProvider>
-            <Button onClick={() => handleBook(findData.id)} variant="contained" color="secondary"> Start Booking </Button>
-    </Paper>
+                  <form onSubmit={() => handleBook(findData.id)}>
+                    <label for="fname">Origin</label>
+                    <br></br>
+                    <input  className="" type="text" name="email" placeholder="Origin" required />
+                    <br></br>
+                    <label for="fname">Destination</label>
+                    <br></br>
+                    <input className="" type="text" name="email"  placeholder={findData.name} disabled />
+              <Grid container justify="space-around">
+              <form className={classes.container} noValidate>
+      <TextField
+        id="date"
+        label="From"
+        type="date"
+        defaultValue="2017-05-24"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+                      </form>
+                      <form className={classes.container} noValidate>
+      <TextField
+        id="date"
+        label="To"
+        type="date"
+        defaultValue="2017-05-24"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </form>
+   
+                    </Grid>
+                    <button className="booking-btn" type="submit"> Start Booking </button>
+              </form>
+           
+          </Paper>
         </Grid>
       </Grid>
-      </div>
+          </div>
+        </div>
+        </div>
+      </>
   );
 };
 

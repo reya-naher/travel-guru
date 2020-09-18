@@ -1,0 +1,57 @@
+.form-design{
+  padding:10px;
+  border: 1px solid black;
+  width: 300px;
+  margin:auto
+}
+.submit-btn{
+ background-color:#FFBD33;
+ margin: 10px;
+
+}
+.input-text {
+  border: none;
+  border-bottom: 2px solid black;  
+  margin: 10px;
+}
+.checkbox-style{
+  color:red;
+  font-size: 20px;
+  margin: 10px;
+  font-weight: bold;
+}
+.form-headline{
+  color:#FFBD33;
+font-weight: bold;
+font-size: 18px;
+}
+button{
+  cursor: pointer;
+}
+.another-sign-btn{
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: 1px solid black;
+  cursor:pointer;
+  overflow: hidden;
+  padding: 5px 15px;
+  margin: 10px;
+  border-radius: 25px;
+}
+.horizontal-text{
+  position:relative;
+  left: 570px;
+  width: 20%; 
+  text-align: center; 
+  border-bottom: 1px solid #000; 
+  line-height: 10px;
+  margin: 10px 0 20px; 
+}
+.horizontal-text span{
+  background:#fff; 
+  padding:0 10px; 
+}
+.brand-icon{
+  margin-right: 15px;
+  
+}
