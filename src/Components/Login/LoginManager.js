@@ -8,13 +8,13 @@ export const initializeLoginFramework = () => {
     }
 }
 
-export const current = () => {
-  const a = firebase.auth().onAuthStateChanged((user) => {
-    console.log("user",user)
-  })
-  console.log("A",a)
-  return a;
-}
+// export const current = () => {
+//   const a = firebase.auth().onAuthStateChanged((user) => {
+//     console.log("user",user)
+//   })
+//   console.log("A",a)
+//   return a;
+// }
 
 export const handleGoogleSignIn = () => {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -74,14 +74,15 @@ export const handleGoogleSignIn = () => {
       newUserInfo.error = '';
       newUserInfo.success = true;
       updateUserName(name);
-      verifyEmail();
+      // verifyEmail();
       return newUserInfo;
     })
-    .catch( error => {
+      .catch(error => {
+      console.log(error)
       const newUserInfo = {};
       newUserInfo.error = error.message;
       newUserInfo.success = false;
-      return newUserInfo;
+      return newUserInfo;   
     });
  }
 
@@ -102,8 +103,8 @@ export const handleGoogleSignIn = () => {
  }
 
  const updateUserName = name =>{
-    const user = firebase.auth().currentUser;
-
+   const user = firebase.auth().currentUser;
+   
     user.updateProfile({
       displayName: name
     }).then(function() {
@@ -113,14 +114,14 @@ export const handleGoogleSignIn = () => {
     });
 }
   
-const verifyEmail = () => {
-  var user = firebase.auth().currentUser;
-  user.sendEmailVerification().then(function () { 
-  //send email
-}).catch(function (error) { 
-  console.log(error)
-});
-}
+// const verifyEmail = () => {
+//   var user = firebase.auth().currentUser;
+//   user.sendEmailVerification().then(function () { 
+//   //send email
+// }).catch(function (error) { 
+//   console.log(error)
+// });
+// }
 
 export const resetPassword = email => {
   var auth = firebase.auth();

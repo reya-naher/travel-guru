@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react';
 import './App.css';
-import Header from './Components/Header/Header';
 import Home from './Components/Home/Home';
 import {
   BrowserRouter as Router,
@@ -9,35 +8,37 @@ import {
 } from "react-router-dom";
 import Booking from './Components/Booking/Booking';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
-import data from '../src/FakeData/FakePlace';
 import BookingDetail from './Components/BookingDetail/BookingDetail';
 import Login from './Components/Login/Login';
-import hotel from './FakeData/FakeHotel'
 import NoMatch from './Components/NoMatch/NoMatch';
+import CreateUser from './Components/Login/CreateUser';
 
 export const UserContext = createContext()
 
 function App() {
-  const [loggedInUser,setLoggedInUser] = useState({})
+  const [loggedInUser, setLoggedInUser] = useState({})
+  const [updateOrigin, setUpdateOrigin] = useState('')
+  const [from, setFrom] = useState(null)
+  const [to, setTo] = useState(null)
   return (
-    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      {/* <p>Email:{loggedInUser.email}</p>  */}
-      
+    <UserContext.Provider value={{ loggedInUser, setLoggedInUser,updateOrigin,setUpdateOrigin,from, setFrom, to, setTo}}>  
       <Router> 
-      {/* <Header></Header> */}
-      <Switch>
-          <Route exact path="/">  
-        <Home data={data}></Home> 
-        </Route>
+      <Switch> 
         <Route path="/place/:name">
-        <Booking data={data}></Booking>
+        <Booking></Booking>
           </Route>
-          <Route path="/login">
-              <Login></Login>
+          <Route path="/createuser">
+            <CreateUser></CreateUser>
+          </Route>
+          <Route path="/userlogin">
+            <Login></Login>
             </Route>
           <PrivateRoute path="/book/:name/:id">
-              <BookingDetail hotel={hotel}></BookingDetail>
+              <BookingDetail></BookingDetail>
           </PrivateRoute>
+          <Route exact path="/">  
+        <Home></Home> 
+        </Route>
           <Route path="*">
             <NoMatch></NoMatch>
           </Route>

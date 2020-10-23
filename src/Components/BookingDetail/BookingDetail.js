@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import './BookingDetail.css';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -10,7 +11,9 @@ import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Header from '../Header/Header';
+import hotels from '../../FakeData/FakeHotel';
 import Map from './Map';
+import { UserContext } from '../../App';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,25 +25,37 @@ const useStyles = makeStyles((theme) => ({
     width: 250,
 
   },
+  placeName: {
+    color:"#FFBD33"
+  },
   content: {
     height: 140,
     width: 350,
+  },
+  mblContainer: {
+    paddingLeft:"15px",
+    [theme.breakpoints.up('xs')]: {
+      marginTop: "10px"
+    },
   }
 }));
 
-const BookingDetail = (props) => {
+const BookingDetail = () => {
+  const { updateOrigin,from,to } = useContext(UserContext);
   const classes = useStyles();
   const { id, name } = useParams()
-  const hotels = props.hotel
   const filterData = hotels.filter(item => item.id === id)
-  console.log(filterData)
   return (
 
     <Grid container>
       <Header></Header>
-      <Grid item xs={6}>
-        <p>stays in 13-14April 3 guests</p>
-        <h1>Stays In {name}</h1>
+      <Grid item md={6} xs={12} className={classes.mblContainer}>
+        <p>From <span className={classes.placeName}>{updateOrigin}</span> stays in [{from}]-[{to}]</p>
+        <h2> Stays In
+          <span className={classes.placeName}>
+            {name}
+          </span>
+        </h2>
         {/* show hotel */}
         {
           filterData.map((data, index) =>
@@ -56,22 +71,34 @@ const BookingDetail = (props) => {
               <Grid item xs={6} className={classes.root}>
                 <Card>
                   <CardContent className={classes.content}>
-                    <Typography gutterBottom variant="h6" component="h6">
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      component="h6">
                       {data.name}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p">
                       {data.roomDescription}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p">
                       {data.roomFeature}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p">
                       {data.option}
                     </Typography>
                     <Grid
                       justify="space-between"
                       container
-                      spacing={24}
+                      spacing={10}
                     >
                       <Grid item>
                         <Typography variant="body2" color="textSecondary" component="p">
@@ -95,9 +122,8 @@ const BookingDetail = (props) => {
             </Grid>)
         }
       </Grid>
-      <Grid item xs={6}>
-        {/* show map */}
-        <Map></Map>
+      <Grid item xs={12} md={6}>
+        <Map name={name}></Map>
       </Grid>
     </Grid>
   );

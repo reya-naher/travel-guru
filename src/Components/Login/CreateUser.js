@@ -3,13 +3,14 @@ import './Login.css';
 import { useContext } from 'react';
 import { UserContext } from '../../App';
 import { useHistory, useLocation, Link } from 'react-router-dom';
-import { resetPassword, initializeLoginFramework, handleGoogleSignIn, handleSignOut, handleFbSignIn, signInWithEmailAndPassword } from '../Login/LoginManager';
+import { current, initializeLoginFramework, handleGoogleSignIn, handleFbSignIn, createUserWithEmailAndPassword } from '../Login/LoginManager';
 import Header from '../Header/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 
-function Login() {
+function CreateUser() {
+  const [newUser, setNewUser] = useState(true);
   const [user, setUser] = useState({
     isSignedIn: false,
     name: '',
@@ -20,10 +21,14 @@ function Login() {
 
   initializeLoginFramework();
 
-  const {setLoggedInUser}  = useContext(UserContext);
+  const { setLoggedInUser } = useContext(UserContext);
   const history = useHistory();
   const location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };
+
+  // useEffect(() => {
+  //   current()
+  // }, [])
 
   const googleSignIn = () => {
     handleGoogleSignIn()
@@ -47,12 +52,6 @@ function Login() {
 
   }
 
-  const signOut = () => {
-    handleSignOut()
-      .then(res => {
-        handleResponse(res, false);
-      })
-  }
 
   const handleBlur = (e) => {
     let isFieldValid = true;
@@ -74,35 +73,46 @@ function Login() {
   }
   const handleSubmit = (e) => {
 
-    if (user.email && user.password) {
-      signInWithEmailAndPassword(user.email, user.password)
+    if (newUser && user.email && user.password) {
+      createUserWithEmailAndPassword(user.name, user.email, user.password)
         .then(res => {
+          console.log(res)
           handleResponse(res, true);
+
         })
     }
+
     e.preventDefault();
   }
-
   return (
     <>
       <Header></Header>
-      <div
-        style={{
-          textAlign: 'center',
-          paddingTop: "20px"
-        }}>
+      <div style={{ textAlign: 'center' }}>
+        <br></br>
         {/* show form */}
-        <form
-          onSubmit={handleSubmit}
-          className="form-design">
+        <form onSubmit={handleSubmit} className="form-design">
           <label
             className="form-headline">
-            Login
+            Create An Account
             </label>
           <br></br>
           <input
+            name="name"
             className="input-text"
             type="text"
+            onBlur={handleBlur}
+            placeholder="FirstName" />
+          <br />
+          <input
+            name="name"
+            className="input-text"
+            type="text"
+            onBlur={handleBlur}
+            placeholder="LastName" />
+          <br></br>
+          <input
+            type="text"
+            className="input-text"
             name="email"
             onBlur={handleBlur}
             placeholder="Your Email address"
@@ -116,36 +126,26 @@ function Login() {
             placeholder="Your Password"
             required />
           <br />
-          <label
-            className="remember"
-            htmlFor="remember">
-            <input
-              className="remember-check"
-              type="checkbox"
-              id="remember"
-              name="remember"
-              value="remember" />
-                 Remember Me
-            </label>
-
-          <button
-            className="forget-btn"
-            onClick={() => resetPassword(user.email)}>
-            Forget Password
-            </button>
-          <br></br>
+          <input
+            className="input-text"
+            type="password"
+            name="confirm"
+            onBlur={handleBlur}
+            placeholder="Confirm Password"
+            required />
+          <br />
           <button
             className="submit-btn"
             type="submit">
-            Sign In
+            Sign Up
             </button>
         </form>
         <span>
-          Don't Have an account?
+          Already Have an account?
           <Link
             style={{ color: "#FFBD33" }}
-            to="/createuser">
-            Create An Account
+            to="/userlogin">
+            Login
             </Link>
         </span>
         <p
@@ -154,9 +154,7 @@ function Login() {
         </p>
         <h5
           className="horizontal-text">
-          <span>
-            OR
-            </span>
+          <span>OR</span>
         </h5>
         <button
           className="another-sign-btn"
@@ -165,7 +163,8 @@ function Login() {
             className="brand-icon"
             icon={faGoogle} />
             Continue With Google
-            </button>
+        </button>
+
         <br />
         <button
           className="another-sign-btn"
@@ -174,11 +173,11 @@ function Login() {
             className="brand-icon"
             icon={faFacebook} />
             Continue With Facebook
-            </button>
+        </button>
       </div>
     </>
   );
 }
 
-export default Login;
+export default CreateUser;
 

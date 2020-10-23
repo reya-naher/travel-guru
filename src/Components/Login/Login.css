@@ -1,13 +1,16 @@
 .form-design{
-  padding:10px;
+  padding:20px;
   border: 1px solid black;
-  width: 300px;
+  width: 320px;
   margin:auto
 }
 .submit-btn{
  background-color:#FFBD33;
  margin: 10px;
-
+ width: 80%;
+}
+.custom-color{
+  color:#FFBD33;
 }
 .input-text {
   border: none;
@@ -21,7 +24,7 @@
   font-weight: bold;
 }
 .form-headline{
-  color:#FFBD33;
+color:#FFBD33;
 font-weight: bold;
 font-size: 18px;
 }
@@ -40,7 +43,7 @@ button{
 }
 .horizontal-text{
   position:relative;
-  left: 570px;
+  left: 40%;
   width: 20%; 
   text-align: center; 
   border-bottom: 1px solid #000; 
@@ -63,4 +66,12 @@ button{
   overflow: hidden;
   outline:none;
   color:#FFBD33;
+  float:right;
+}
+.remember-check{
+  margin: 2px;
+}
+.remember{
+  float:left;
+  
 }

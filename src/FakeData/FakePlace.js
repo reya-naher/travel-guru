@@ -15,8 +15,8 @@ let data = [
   },
   {
     "id": "3",
-    "name": "Shundarban",
-    "img": "https://i.imgur.com/6ieicIM.png",
+    "name": "Rangamati",
+    "img": "https://i.ibb.co/XDxj6wX/Rangamati-1-1.jpg",
     "subtitle": "The Sundarbans are the largest littoral mangrove belt in the world, stretching 80 km (50 mi) into the Bangladeshi and Indian hinterland from the coast....",
     "description":"The Sundarbans are the largest littoral mangrove belt in the world, stretching 80 km (50 mi) into the Bangladeshi and Indian hinterland from the coast. The Sundarbans has been declared a UNESCO World Heritage Site.country's most popular beach resort. Sort of a Cancun of the east, it's choc-a-bloc with massive cement hotels and gaudy over-development."
   }

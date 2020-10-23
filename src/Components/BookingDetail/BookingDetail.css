@@ -1,0 +1,8 @@
+@media (max-width: 640px) {
+  .MuiGrid-grid-xs-12{
+    margin-left: 30px!important;
+  }
+  .MuiGrid-grid-xs-6{
+    max-width: 80%!important;
+  }
+}
