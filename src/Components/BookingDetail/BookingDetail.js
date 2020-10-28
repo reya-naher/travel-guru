@@ -51,8 +51,7 @@ const BookingDetail = () => {
       <Header></Header>
       <Grid item md={6} xs={12} className={classes.mblContainer}>
         <p>From <span className={classes.placeName}>{updateOrigin}</span> stays in [{from}]-[{to}]</p>
-        <h2> Stays In
-          <span className={classes.placeName}>
+        <h2> Stays In <span className= {classes.placeName}>
             {name}
           </span>
         </h2>
